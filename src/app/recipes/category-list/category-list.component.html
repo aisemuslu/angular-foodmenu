@@ -1,0 +1,11 @@
+<div class="row">
+  <div class=”col-xs-12”>
+    <button class="btn btn-success" (click)="onNewCategory()">New Food Category</button>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-xs-12">
+    <app-category-item *ngFor="let categoryEl of (categoryState | async).categories; let i = index" [category]="categoryEl" [index]="i"></app-category-item>
+  </div>
+</div>

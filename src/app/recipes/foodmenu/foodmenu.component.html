@@ -1,0 +1,248 @@
+<!-- filter: brightness(50%); -->
+<div style='background-color: lavender; margin-top:-20px; padding-top:5px; padding-bottom:5px; padding-left:20px'>
+  <p> This is the Food Menu Generator in action!</p>
+  
+  <p>In order to <b>add/edit/delete</b> food categories and foods, you need to register and login.</p>
+  
+  <p> Register to make your own food menu. Your menu settings will be saved to the <b>database</b>. <p>
+  
+  
+  <p> Or login using the test account</p>
+  <p><b>Email: test@test.com</b></p>
+  <p><b>Password:123456</b></p>
+  </div>
+<div *ngIf="editMode">
+
+  <div class="Basic3Col" style="background-color:#fff">
+
+    <div>
+      <h4>Layout Settings</h4>
+      <table>
+        <tr>
+          <td>Menu Layout</td>
+          <td>
+            <select [(ngModel)]="json.layout" class="form-control">
+              <option value="Basic1Col">
+                1 Column - Basic
+              </option>
+              <option value="Basic2Col">
+                2 Column - Basic
+              </option>
+              <option value="Masonry2Col">
+                2 Column - Masonry
+              </option>
+              <option value="Basic3Col">
+                3 Column - Basic
+              </option>
+              <option value="Masonry3Col">
+                3 Column -  Masonry
+              </option>
+
+
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Food Layout</td>
+          <td>
+            <select [(ngModel)]="json.contentLayout" class="form-control">
+
+              <option value="ClassicList1Col">
+                Classic list - 1 column
+              </option>
+              <option value="ClassicList2Col">
+                Classic list - 2 column
+              </option>
+              <option value="BigPicture1Col">
+                Big Picture - 1 column
+              </option>
+              <option value="BigPicture2Col">
+                Big Picture - 2 column
+              </option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Outer Padding:</td>
+          <td>
+            <input style="width:100%" type="number" step="1" min="0" max="50" (input)="resetBorderColorIfZero($event)" [(ngModel)]="json.padding">
+          </td>
+        </tr>
+        <tr>
+          <td>Outer Color:</td>
+          <td>
+            <input type="text" (click)="toggleColorPicker('LayoutBorderColorPicker')" [(ngModel)]="json.layoutBorderColor">
+            <!-- <color-picker style="position:absolute; z-index:2" *ngIf="showLayoutBorderColorPicker" [value]="{'hex': json.layoutBorderColor}"
+              (keyup)="updateLayoutBorderColor" (input)="updateLayoutBorderColor" /> -->
+          </td>
+        </tr>
+      </table>
+
+
+    </div>
+    <div>
+      <h4>Category Settings</h4>
+
+      <table>
+
+        <tr>
+          <td>Category Height:</td>
+          <td>
+            <input style="width:100%" type="number" step="1" min="50" max="400" [(ngModel)]="json.categoryHeight">
+          </td>
+        </tr>
+        <tr>
+          <td>Category align</td>
+          <td>
+            <select [(ngModel)]="json.categoryTextAlign" class="form-control ">
+              <option value="center">
+                Center
+              </option>
+              <option value="left">
+                Left align
+              </option>
+              <option value="right">
+                Right align
+              </option>
+
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>Category Text Color:</td>
+          <td>
+            <input type="text" (click)="toggleColorPicker('CategoryTextColorPicker')" [(ngModel)]="json.categoryTextColor">
+            <!-- <color-picker style="position:absolute; z-index:2" *ngIf="showCategoryTextColorPicker2" [value]="{'hex': json.categoryTextColor}"
+              (input)="updateCategoryTextColor" (keyup)="updateCategoryTextColor" /> -->
+          </td>
+        </tr>
+        <tr>
+          <td>Category Text Size:</td>
+          <td>
+            <input style="width:100%" type="number" step="1" min="10" max="50" [(ngModel)]="json.categoryTextSize">
+          </td>
+        </tr>
+
+      </table>
+    </div>
+    <div>
+      <h4>Food Settings</h4>
+
+
+      <table>
+        <tr>
+          <td>Show price</td>
+          <td>
+            <input type="checkbox" [(ngModel)]="json.showPrice">
+          </td>
+        </tr>
+        <tr>
+          <td>Show description</td>
+          <td>
+            <input type="checkbox" [(ngModel)]="json.showDescription">
+          </td>
+        </tr>
+        <tr>
+          <td>Show picture</td>
+          <td>
+            <input type="checkbox" [(ngModel)]="json.showImage">
+          </td>
+        </tr>
+
+        <tr>
+          <td>Show divider</td>
+          <td>
+            <input type="checkbox" [(ngModel)]="json.showDivider">
+          </td>
+        </tr>
+        <tr>
+          <td>Picture size:</td>
+          <td>
+            <input style="width:100%" type="number" step="1" min="50" max="400" [(ngModel)]="json.imageSize">
+          </td>
+        </tr>
+        <tr>
+          <td>Center content:</td>
+          <td>
+            <input type="checkbox" [(ngModel)]="json.contentCentered">
+          </td>
+        </tr>
+        <tr>
+          <td>Content text color:</td>
+          <td>
+            <input type="text" (click)="toggleColorPicker('ContentTextColorPicker')" [(ngModel)]="json.contentTextColor">
+            <!-- <color-picker style="position:absolute; z-index:2" *ngIf="showContentTextColorPicker" [value]="{'hex': json.contentTextColor}"
+              (input)="updateContentTextColor" (keyup)="updateContentTextColor" /> -->
+          </td>
+        </tr>
+        <tr>
+          <td>Content text size:</td>
+          <td>
+            <input style="width:100%" type="number" step="1" min="10" max="40" [(ngModel)]="json.contentTextSize">
+          </td>
+        </tr>
+      </table>
+    </div>
+
+
+  </div>
+  
+
+  <div class="wrapper">
+    <div [ngClass]="json.layout" [ngStyle]="{ 'background-color': json.layoutBorderColor, 'padding':json.padding +'px' }">
+      <div [ngClass]="categoryWrapperClass(getCategoryInfoFromJson(category.id))" [ngStyle]="categoryWrapperStyle(getCategoryInfoFromJson(category.id))"
+        *ngFor="let category of categories; let index=index">
+
+        <div [ngClass]="categoryHeaderClass(getCategoryInfoFromJson(category.id))" [ngStyle]="categoryHeaderStyle(getCategoryInfoFromJson(category.id))">
+          <p class="title" [ngStyle]="categoryTextStyle(getCategoryInfoFromJson(category.id))">{{ category.name }}</p>
+
+
+        </div>
+        <div class="categoryContent">
+          <div class="content menuitem-wrapper" *ngFor="let product of category.products">
+            <div class="menuitem">
+
+              <div *ngIf="json.showImage" class="menuitem-image" [ngStyle]="imageStyle(product)">
+                <img *ngIf="json.contentLayout=='ClassicList2Col' || json.contentLayout=='ClassicList1Col'" [ngStyle]="{ 'width': json.imageSize + 'px', 'height':json.imageSize +'px' }"
+                  [src]="product.imagePath">
+              </div>
+
+              <div class="menuitem-inner" [ngClass]="{ 'contentCentered': json.contentCentered }">
+
+                <div class="title-price-holder clearfix">
+
+                  <h5 class="title" [ngStyle]="priceLineStyle(getCategoryInfoFromJson(category.id))">
+                    <span class="title-area" [ngStyle]="contentTextStyle(getCategoryInfoFromJson(category.id))">
+                                                                                              {{product.name}}
+                                                                          
+                                                                                              <div *ngIf="json.showPrice" class="price-holder">
+                                                                                                <span class="price" [ngStyle]="contentTextStyle(getCategoryInfoFromJson(category.id))">
+                                                                                                   20 $
+                                                                                                </span>
+                </div>
+
+                </span>
+                </h5>
+
+              </div>
+
+              <p *ngIf="json.showDescription" [ngStyle]="descTextStyle(getCategoryInfoFromJson(category.id))" class="desc">{{product.description}}</p>
+            </div>
+
+          </div>
+          <div class="divider" *ngIf="json.showDivider">
+            <div [ngStyle]="dividerStyle(getCategoryInfoFromJson(category.id))">
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+
+
+    </div>
+
+
+  </div>
+</div>
